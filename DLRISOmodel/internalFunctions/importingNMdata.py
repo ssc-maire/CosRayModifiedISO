@@ -5,7 +5,7 @@ import datetime as dt
 
 from DLRISOmodel.internalFunctions.miscellaneous import homeDirectory
 
-def readInOULUdata():
+def readInOULUdata()->pd.DataFrame:
 
     inputPKLfile = homeDirectory + "/neutronMonitorData/OULUinputData.pkl"
 
@@ -29,7 +29,7 @@ def readInOULUdata():
 
     return outputDF
 
-def getOULUcountRateForTimestamp(timestamp:dt.datetime):
+def getOULUcountRateForTimestamp(timestamp:dt.datetime)->float:
 
     OULUfullDF = readInOULUdata()
 

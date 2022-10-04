@@ -10,13 +10,13 @@ from DLRISOmodel.internalFunctions.pythonDLRISO import getAtomicMass, getDLRISO_
 from DLRISOmodel.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleRigidityToEnergy
 from DLRISOmodel.internalFunctions.spectrumHandling import DLRmodelSpectrum_fromSolarModulation
 
-def getEnergyFluxesFromEnergies(solarModulationWparameter, atomicNumber, energyListInMeV):
+def getEnergyFluxesFromEnergies(solarModulationWparameter:float, atomicNumber:int, energyListInMeV:list):
 
     energyListInMeV = convertToIterable(energyListInMeV)
 
     return np.array([getDLRISO_GCR_Flux_Single(solarModulationWparameter, atomicNumber, energy) for energy in energyListInMeV])
 
-def getRigidityFluxesFromRigidities(solarModulationWparameter, atomicNumber, rigidityListInGV):
+def getRigidityFluxesFromRigidities(solarModulationWparameter:float, atomicNumber:int, rigidityListInGV:list):
 
     rigidityListInGV = convertToIterable(rigidityListInGV)
 
@@ -33,7 +33,7 @@ def getRigidityFluxesFromRigidities(solarModulationWparameter, atomicNumber, rig
 
     return np.array(rigidityFluxes)
 
-def getSpectrumUsingSolarModulation(solarModulationWparameter, atomicNumber):
+def getSpectrumUsingSolarModulation(solarModulationWparameter:float, atomicNumber:int):
     generalSpectrum = DLRmodelSpectrum_fromSolarModulation(solarModulationWparameter, atomicNumber)
     outputDF = generalSpectrum._generatedSpectrumDF
     outputDF.columns = ["Energy (MeV/n)", 
@@ -42,8 +42,8 @@ def getSpectrumUsingSolarModulation(solarModulationWparameter, atomicNumber):
                         "d_Flux / d_E (cm-2 s-1 sr-1 (GV/n)-1)"]
     return outputDF
 
-def getSpectrumUsingOULUcountRate(OULUcountRate, atomicNumber):
-    solarModulationWparameter = getWparameterFromOULUcountRate(OULUcountRate)
+def getSpectrumUsingOULUcountRate(OULUcountRatePerSecond:float, atomicNumber:int):
+    solarModulationWparameter = getWparameterFromOULUcountRate(OULUcountRatePerSecond)
     outputDF = getSpectrumUsingSolarModulation(solarModulationWparameter, atomicNumber)
     return outputDF
 
@@ -55,7 +55,7 @@ getWparameterFromOULUcountRate = getWparameterFromOULUcountRate
 
 getDLRISO_GCR_Flux_Single = getDLRISO_GCR_Flux_Single
 
-def getSpectrumUsingTimestamp(timestamp:dt.datetime, atomicNumber):
+def getSpectrumUsingTimestamp(timestamp:dt.datetime, atomicNumber:int):
 
     OULUcountRate = getOULUcountRateForTimestamp(timestamp)
     Wparameter = getWparameterFromOULUcountRate(OULUcountRate)

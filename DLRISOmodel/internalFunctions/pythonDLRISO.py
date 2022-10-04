@@ -1,7 +1,7 @@
 import numpy as np
 from numba import jit
 
-def getWparameterFromOULUcountRate(OULUcountRateInSeconds):
+def getWparameterFromOULUcountRate(OULUcountRateInSeconds:float):
     # equation take from enginePythonScripts.Matthiä, Daniel, et al. "A ready-to-use galactic cosmic ray model."
     # Advances in Space Research 51.3 (2013): 329-338, https://doi.org/10.1016/j.asr.2012.09.022
 
@@ -28,7 +28,7 @@ def getDLRISO_GCR_Flux_Default_Energies(W, Z):
     return outputFluxArray
 
 @jit(nopython=True)
-def getDLRISO_GCR_Flux_Single(W, Z, energy):
+def getDLRISO_GCR_Flux_Single(W:float, Z:int, energy:float)->float:
 
     # ensuring correct inputs
     if ((W < 0) or (W > 200)):
