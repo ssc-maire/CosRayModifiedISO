@@ -23,8 +23,8 @@ from DLRISOmodel import DLRISOmodel
 unless otherwise stated, all of the quantities specified in this library use the following units:
 * Energies are always in units of **MeV**
 * Rigidities are always in units of **GV**
-* Differential energy fluxes are always in units of **cts / cm^2 / s / sr / (MeV/n)**
-* Differential rigidity fluxes are always in units of **cts / cm^2 / s / sr / (GV/n)**
+* Differential energy fluxes are always in units of **cts / cm<sup>2</sup> / s / sr / (MeV/n)**
+* Differential rigidity fluxes are always in units of **cts / cm<sup>2</sup> / s / sr / (GV/n)**
 
 It should be noted that in the field of space radiation, "energy" is frequently generally used specifically as a shorthand for "kinetic energy" rather than 
 the total energy of a particle (rest mass energy + kinetic energy), and all references to "energy" in this library should be assumed to be kinetic energy
@@ -133,7 +133,15 @@ The solar modulation parameter can also be supplied directly using
 ```
 DLRISOmodel.getSpectrumUsingSolarModulation(solarModulationWparameter, atomicNumber)
 ```
-Both of these methods output Pandas DataFrames in the same format as outputted by `getSpectrumUsingTimestamp`. The value of the solar modulation parameter
+This function can be identically supplied with the monthly averaged sunspot number instead of the solar modulation parameter, which the solar modulation parameter
+is essentially a proxy for. Alternatively the identical function 
+
+```
+DLRISOmodel.getSpectrumUsingSSN(sunspotNumber, atomicNumber)
+```  
+can be used instead for code understandability.
+
+Each of these three methods output Pandas DataFrames in the same format as outputted by `getSpectrumUsingTimestamp`. The value of the solar modulation parameter
 as a function of OULU neutron monitor monitor count rate can also be outputted by running
 
 ```
