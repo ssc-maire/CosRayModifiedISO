@@ -7,7 +7,7 @@ from DLRISOmodel.internalFunctions.importingNMdata import getOULUcountRateForTim
 
 from DLRISOmodel.internalFunctions.miscellaneous import convertToIterable
 from DLRISOmodel.internalFunctions.pythonDLRISO import getAtomicMass, getDLRISO_GCR_Flux_Single, getWparameterFromOULUcountRate
-from DLRISOmodel.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleRigidityToEnergy
+from DLRISOmodel.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleRigiditySpecToEnergySpec, convertParticleRigidityToEnergy, convertParticleEnergyToRigidity
 from DLRISOmodel.internalFunctions.spectrumHandling import DLRmodelSpectrum_fromSolarModulation
 
 def getEnergyFluxesFromEnergies(solarModulationWparameter:float, atomicNumber:int, energyListInMeV:list):
@@ -39,7 +39,7 @@ def getSpectrumUsingSolarModulation(solarModulationWparameter:float, atomicNumbe
     outputDF.columns = ["Energy (MeV/n)", 
                         "d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)",
                         "Rigidity (GV/n)",
-                        "d_Flux / d_E (cm-2 s-1 sr-1 (GV/n)-1)"]
+                        "d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)"]
     return outputDF
 
 def getSpectrumUsingOULUcountRate(OULUcountRatePerSecond:float, atomicNumber:int):

@@ -2,7 +2,7 @@ import numpy as np
 from numba import jit
 
 def getWparameterFromOULUcountRate(OULUcountRateInSeconds:float):
-    # equation take from enginePythonScripts.Matthiä, Daniel, et al. "A ready-to-use galactic cosmic ray model."
+    # equation take from Matthiä, Daniel, et al. "A ready-to-use galactic cosmic ray model."
     # Advances in Space Research 51.3 (2013): 329-338, https://doi.org/10.1016/j.asr.2012.09.022
 
     OULUmeanCountRateInMins = OULUcountRateInSeconds * 60
@@ -107,7 +107,7 @@ def getAtomicMass(atomicNumber):
     if ( atomicNumber < 0 ):
         atomicMass = 1.0           # handle case for electron
     elif (atomicNumber <= 92):
-        atomicMass = A[atomicNumber]       # look up table for other elements.
+        atomicMass = A[atomicNumber-1]       # look up table for other elements.
     else:
         atomicMass = 0.0           # just in case
 
