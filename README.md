@@ -110,12 +110,12 @@ print(DLRISOmodel.getSpectrumUsingTimestamp(datetimeToUse,atomicNumber=1))
 ```
 returns the output
 ```
-   Energy (MeV/n)  d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)  Rigidity (GV/n)  d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)
-0       11.294627                            2.290835e-07         0.291388                               0.000018
-1       14.219093                            3.785376e-07         0.327006                               0.000033
-2       17.900778                            6.157642e-07         0.366997                               0.000060
-3       22.535744                            9.848618e-07         0.411904                               0.000107
-4       28.370820                            1.546788e-06         0.462343                               0.000189
+    Energy (MeV/n)  d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)  Rigidity (GV/n)  d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)
+0        11.294627                            2.290835e-07         0.146022                           3.522790e-05
+1        14.219093                            3.785376e-07         0.163966                           6.516322e-05
+2        17.900778                            6.157642e-07         0.184152                           1.185919e-04
+3        22.535744                            9.848618e-07         0.206875                           2.120539e-04
+4        28.370820                            1.546788e-06         0.232474                           3.719962e-04
 ...
 ```
 `getSpectrumUsingTimestamp` returns output in the form of a [Pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).

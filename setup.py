@@ -12,7 +12,12 @@ if os.path.isfile(requirement_path):
 setup(
     name='DLRISOmodel',
     packages=find_packages(),
-    version='0.1.0',
+    #packages=find_packages(where="DLRISOmodel"),
+    #package_dir={"": "DLRISOmodel"},
+    #package_dir={"":"."},
+    package_data={"":["DLRISOmodel/neutronMonitorData/*.dat","DLRISOmodel/neutronMonitorData/*.pkl"]},
+    include_package_data=True,
+    version='0.1.1',
     description='Python library for running the DLR ISO cosmic ray model to get cosmic ray spectra',
     author='Me',
     license='MIT',

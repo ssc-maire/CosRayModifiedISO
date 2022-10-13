@@ -63,7 +63,7 @@ def convertParticleEnergySpecToRigiditySpec(particleKineticEnergyInMeV:pd.Series
 
     return (dKEInMeV_drigidityInGV * fluxInEnergyMeVform.apply(dec.Decimal)).apply(float)
 
-def convertParticleRigiditySpecToEnergySpec(particleRigidityInGV, fluxInRigidityGVform, particleMassAU = 1, particleChargeAU = 1):
+def convertParticleRigiditySpecToEnergySpec(particleRigidityInGV:pd.Series, fluxInRigidityGVform:pd.Series, particleMassAU = 1, particleChargeAU = 1):
 
     particleCharge, particleRestEnergy = determineParticleAttributes(particleMassAU, particleChargeAU)
 

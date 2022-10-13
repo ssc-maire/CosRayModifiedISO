@@ -1,0 +1,1 @@
+include DLRISOmodel/neutronMonitorData/*.pkl DLRISOmodel/neutronMonitorData/*.dat
