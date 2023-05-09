@@ -23,6 +23,9 @@ jobs:
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
+    environment:
+      name: pypi commit environment
+      url: https://pypi.org/p/CosRayModifiedISO
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
