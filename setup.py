@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from pathlib import Path
 import os
 
 # get requirements for installation
@@ -8,9 +9,9 @@ install_requires = []
 if os.path.isfile(requirement_path):
     with open(requirement_path) as f:
         install_requires = f.read().splitlines()
-        
-with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = '\n' + f.read()
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='CosRayModifiedISO',
