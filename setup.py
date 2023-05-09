@@ -16,7 +16,6 @@ setup(
     include_package_data=True,
     version='1.0',
     url="https://github.com/ssc-maire/CosRayModifiedISO",
-    description='A Python library for acquiring galactic cosmic ray spectra at Earth from the ISO model as modified by DLR.',
     author='Chris S. W. Davis',
     author_email='ChrisSWDavis@gmail.com',
     license='MIT',
