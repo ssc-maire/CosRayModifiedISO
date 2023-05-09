@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:815a85e31a547cd280092c554ab8235ece0dd9f92c438f1f15791a970ba3dcd8
-size 94
+include CosRayModifiedISO/neutronMonitorData/*.pkl CosRayModifiedISO/neutronMonitorData/*.dat
