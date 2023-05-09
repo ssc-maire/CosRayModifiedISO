@@ -8,6 +8,9 @@ install_requires = []
 if os.path.isfile(requirement_path):
     with open(requirement_path) as f:
         install_requires = f.read().splitlines()
+        
+with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = '\n' + f.read()
 
 setup(
     name='CosRayModifiedISO',
@@ -23,4 +26,6 @@ setup(
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     test_suite='tests',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
 )
