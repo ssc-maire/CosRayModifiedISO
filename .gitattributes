@@ -1,8 +1,2 @@
 CosRayModifiedISO/neutronMonitorData/OULU_1964_04_01[[:space:]]_00_00_2021_01_31[[:space:]]_00_00.dat filter=lfs diff=lfs merge=lfs -text
-README.md text !filter !merge !diff
-*.py text !filter !merge !diff
-*.in[[:space:]]requirements.txt[[:space:]].gitignore[[:space:]].github/dependabot.yml[[:space:]].github/workflows/dependency-review.yml text !filter !merge !diff
-*.in text !filter !merge !diff
-requirements.txt text !filter !merge !diff
-*.yml text !filter !merge !diff
-.gitignore text !filter !merge !diff
+CosRayModifiedISO/neutronMonitorData/OULUinputData.pkl filter=lfs diff=lfs merge=lfs -text
