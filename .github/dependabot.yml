@@ -1,11 +1,3 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
-version: 2
-updates:
-  - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
+version https://git-lfs.github.com/spec/v1
+oid sha256:422afa46cdd60f9a837e17c50dcc9f2a8049a5317da71b848fc6ccbb8a9dd5e9
+size 502

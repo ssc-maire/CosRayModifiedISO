@@ -1,7 +1,3 @@
-from DLRISOmodel.DLRISOmodel import getRigidityFluxesFromRigidities, getSpectrumUsingTimestamp
-import datetime as dt
-
-print(getSpectrumUsingTimestamp(dt.datetime(year=1989,month=10,day=27),atomicNumber=1))
-print(getSpectrumUsingTimestamp(dt.datetime(year=2000,month=10,day=27),atomicNumber=1))
-print(getSpectrumUsingTimestamp(dt.datetime(year=2000,month=10,day=27),atomicNumber=7))
-print(getRigidityFluxesFromRigidities(20.7, 1, 100))
+version https://git-lfs.github.com/spec/v1
+oid sha256:3da8ccdcdbd3a6b0be88e61f783ad98434135b13bc11378862294c70c033c0a7
+size 446
