@@ -17,10 +17,12 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
-
+  pypi-publish:
+    name: upload release to PyPI
     runs-on: ubuntu-latest
-
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -33,5 +35,5 @@ jobs:
         pip install build
     - name: Build package
       run: python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
