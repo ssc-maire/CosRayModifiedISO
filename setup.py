@@ -18,7 +18,7 @@ setup(
     packages=find_packages(),
     package_data={"":["CosRayModifiedISO/neutronMonitorData/*.dat","CosRayModifiedISO/neutronMonitorData/*.pkl"]},
     include_package_data=True,
-    version='1.1',
+    version='1.2',
     url="https://github.com/ssc-maire/CosRayModifiedISO",
     author='Chris S. W. Davis',
     author_email='ChrisSWDavis@gmail.com',
