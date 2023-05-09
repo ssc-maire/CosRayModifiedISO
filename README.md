@@ -8,7 +8,13 @@ a single parameter, *W*, which describes the modulation of the Sun at a given da
     
 # Installation
 
-From the cloned directory, run
+You can either install directly from PyPi using
+
+```
+pip install CosRayModifiedISO
+```
+
+Or clone CosRayModifiedISO from https://github.com/ssc-maire/CosRayModifiedISO, and then from the cloned directory, run
 
 ```
 sudo python setup.py install
