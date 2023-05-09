@@ -2,4 +2,4 @@ importlib_resources==5.12.0
 numba==0.57.0
 numpy==1.23.1
 pandas==1.4.3
-setuptools==45.2.0
+setuptools==65.5.1
