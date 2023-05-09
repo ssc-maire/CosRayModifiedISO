@@ -192,6 +192,12 @@ The particle mass for all of these methods can be acquired directly from atomic 
 CosRayModifiedISO.getAtomicMass(atomicNumber)
 ```
 
+# Acknowledgments
+
+Thank you to Daniel Matthiä and others at DLR for allowing us to test their model initially using their own scripts. 
+
+This package contains and for certain functions uses data from the OULU neutron monitor, as acquired from https://www.nmdb.eu/ , where data can also be found at https://cosmicrays.oulu.fi/ . We therefore acknowledge the NMDB database www.nmdb.eu, founded under the European Union's FP7 programme (contract no. 213007) for providing data. 
+
 
 
 
