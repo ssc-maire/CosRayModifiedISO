@@ -5,6 +5,8 @@ A simple library for running the ISO galactic cosmic ray spectrum model as modif
 All the details and equations about this model can be found in Matthiä et al., 
 "A ready-to-use galactic cosmic ray model", Advances in Space Research 51.3 (2013): 329-338, https://doi.org/10.1016/j.asr.2012.09.022 . This model only requires
 a single parameter, *W*, which describes the modulation of the Sun at a given date and time, to calculate the flux of cosmic rays hitting Earth.
+
+If you use this software for scientific research, please reference the above paper, and also reference CosRayModifiedISO specifically as C. S. W. Davis (2023). CosRayModifiedISO version {version number}. https://github.com/ssc-maire/CosRayModifiedISO , https://pypi.org/project/CosRayModifiedISO/ . Surrey Space Center, University of Surrey.
     
 # Installation
 
