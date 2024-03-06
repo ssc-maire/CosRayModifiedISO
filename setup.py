@@ -26,8 +26,8 @@ setup(
     install_requires=["importlib_resources>=5.10.0",
                         "numba>=0.56.4",
                         "numpy>=1.21.6",
-                        "pandas>=1.3.5"]
-setuptools>=45.2.0#install_requires,
+                        "pandas>=1.3.5",
+                        "setuptools>=45.2.0"], #install_requires,
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     test_suite='tests',
