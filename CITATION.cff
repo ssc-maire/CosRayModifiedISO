@@ -4,7 +4,7 @@ authors:
 - alias: "Space Environment and Protection Group, University of Surrey"
 title: "CosRayModifiedISO"
 type: software
-version: 1.2.6
+version: 1.2.7
 doi: 10.5281/zenodo.10992395
 date-released: 2024-04-18
 url: "https://github.com/ssc-maire/CosRayModifiedISO"
