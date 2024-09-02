@@ -21,7 +21,7 @@ setup(
     version='1.2.8',
     url="https://github.com/ssc-maire/CosRayModifiedISO",
     author='Space Environment and Protection Group, University of Surrey',
-    keywords = 'space physics galactic cosmic ray  ',
+    keywords='space physics galactic cosmic ray',
     license='CC BY-NC-SA 4.0',
     install_requires=['importlib_resources>=5.10.0',
                         'numba>=0.56.4',
