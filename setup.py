@@ -18,7 +18,7 @@ setup(
     packages=find_packages(),
     package_data={"":["CosRayModifiedISO/neutronMonitorData/*.dat","CosRayModifiedISO/neutronMonitorData/*.pkl"]},
     include_package_data=True,
-    version='1.2.7',
+    version='1.2.8',
     url="https://github.com/ssc-maire/CosRayModifiedISO",
     author='Space Environment and Protection Group, University of Surrey',
     install_requires=['importlib_resources>=5.10.0',
