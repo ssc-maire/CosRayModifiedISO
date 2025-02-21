@@ -12,7 +12,7 @@ def test_energy_flux_output():
 
     assert round(outputEnergyFlux[0],7) == round(0.00012419,7)
 
-def test_timestamp_flux_output():
+def test_timestamp_flux_output_no_tzinfo():
 
     datetimeToUse = dt.datetime(
     year = 2001,
@@ -21,6 +21,29 @@ def test_timestamp_flux_output():
     hour = 0,
     minute = 10,
     second = 35
+    )
+    
+    outputtedSpectralDataFrame = CosRayModifiedISO.getSpectrumUsingTimestamp(datetimeToUse,atomicNumber=1)
+
+    assert round(outputtedSpectralDataFrame["Energy (MeV/n)"].iloc[0],5) == round(11.294627,5)
+    assert round(outputtedSpectralDataFrame["Energy (MeV/n)"].iloc[4],5) == round(28.370820,5)
+    assert round(outputtedSpectralDataFrame["Rigidity (GV/n)"].iloc[0],5) == round(0.146022,5)
+    assert round(outputtedSpectralDataFrame["Rigidity (GV/n)"].iloc[4],5) == round(0.232474,5)
+    assert round(outputtedSpectralDataFrame["d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)"].iloc[0],10) == round(2.290835e-07,10)
+    assert round(outputtedSpectralDataFrame["d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)"].iloc[4],10) == round(1.546788e-06,10)
+    assert round(outputtedSpectralDataFrame["d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)"].iloc[0],8) == round(3.522790e-05,8)
+    assert round(outputtedSpectralDataFrame["d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)"].iloc[4],8) == round(3.719962e-04,8)
+
+def test_timestamp_flux_output():
+
+    datetimeToUse = dt.datetime(
+    year = 2001,
+    month = 10,
+    day = 27,
+    hour = 0,
+    minute = 10,
+    second = 35,
+    tzinfo = dt.timezone.utc
     )
     
     outputtedSpectralDataFrame = CosRayModifiedISO.getSpectrumUsingTimestamp(datetimeToUse,atomicNumber=1)

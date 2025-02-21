@@ -10,6 +10,10 @@ from CosRayModifiedISO.internalFunctions.pythonModifiedISO import getAtomicMass,
 from CosRayModifiedISO.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleRigiditySpecToEnergySpec, convertParticleRigidityToEnergy, convertParticleEnergyToRigidity
 from CosRayModifiedISO.internalFunctions.spectrumHandling import ISOmodelSpectrum_fromSolarModulation
 
+import logging
+
+logging.basicConfig(level=logging.WARNING)
+
 def getEnergyFluxesFromEnergies(solarModulationWparameter:float, atomicNumber:int, energyListInMeV:list):
 
     energyListInMeV = convertToIterable(energyListInMeV)
@@ -56,6 +60,10 @@ getWparameterFromOULUcountRate = getWparameterFromOULUcountRate
 getModifiedISO_GCR_Flux_Single = getModifiedISO_GCR_Flux_Single
 
 def getSpectrumUsingTimestamp(timestamp:dt.datetime, atomicNumber:int):
+
+    if timestamp.tzinfo is None:
+        logging.warning("The inputted timestamp does not have timezone info. Assuming UTC.")
+        timestamp = timestamp.replace(tzinfo=dt.timezone.utc)
 
     OULUcountRate = getOULUcountRateForTimestamp(timestamp)
     Wparameter = getWparameterFromOULUcountRate(OULUcountRate)
