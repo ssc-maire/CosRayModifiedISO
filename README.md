@@ -12,13 +12,13 @@ If you use this software for scientific research, please reference the above pap
 
 You can either install directly from PyPi using
 
-```
+```shell
 pip install CosRayModifiedISO
 ```
 
 Or clone CosRayModifiedISO from https://github.com/ssc-maire/CosRayModifiedISO, and then from the cloned directory, run
 
-```
+```shell
 sudo python setup.py install
 ```
 
@@ -26,7 +26,7 @@ sudo python setup.py install
 
 to import this module, use
 
-```
+```python
 from CosRayModifiedISO import CosRayModifiedISO
 ```
 
@@ -61,12 +61,12 @@ Unit description:
 
 to get a single differential flux value for a particle value of solar modulation, and for a particular particle with a given atomic number and kinetic energy 
 (or range of kinetic energies), the appropriate method for `CosRayModifiedISO` is
-```
+```python
 CosRayModifiedISO.getEnergyFluxesFromEnergies(solarModulationWparameter, atomicNumber, energyListInMeV)
 ```
 
 For example, the script
-```
+```python
 from CosRayModifiedISO import CosRayModifiedISO
 
 solarModulationWparameter = 19.25 # the solar modulation at a specific point in the solar cycle
@@ -76,7 +76,7 @@ energyListInMeV = 945.2 # kinetic energy of particle in MeV
 print(CosRayModifiedISO.getEnergyFluxesFromEnergies(solarModulationWparameter, atomicNumber, energyListInMeV))
 ```
 gives
-```
+```python
 [0.00012419]
 ```
 as output.
@@ -85,7 +85,7 @@ The argument `energyListInMeV` can be supplied as either a single float or as a 
 or a range of differential fluxes corresponding to each supplied kinetic energy.
 
 If you instead want to acquire differential rigidity fluxes rather than differential energy fluxes, you can use
-```
+```python
 CosRayModifiedISO.getRigidityFluxesFromRigidities(solarModulationWparameter, atomicNumber, rigidityListInGV)
 ```
 which has exactly the same syntax and usage as the `getEnergyFluxesFromEnergies` method, but where rigidities in GV must be supplied instead 
@@ -98,12 +98,12 @@ differential fluxes automatically based on neutron monitor data and a default se
 that are relevant specifically for radiation dose rate calculations in Earth's atmosphere.
 
 The method
-```
+```python
 CosRayModifiedISO.getSpectrumUsingTimestamp(timestamp, atomicNumber)
 ```
 method can be used to output the differential fluxes for a given date and time, for example,
 
-```
+```python
 from CosRayModifiedISO import CosRayModifiedISO
 import datetime as dt
 
@@ -119,7 +119,7 @@ datetimeToUse = dt.datetime(
 print(CosRayModifiedISO.getSpectrumUsingTimestamp(datetimeToUse,atomicNumber=1))
 ```
 returns the output
-```
+```python
     Energy (MeV/n)  d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)  Rigidity (GV/n)  d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)
 0        11.294627                            2.290835e-07         0.146022                           3.522790e-05
 1        14.219093                            3.785376e-07         0.163966                           6.516322e-05
@@ -135,18 +135,18 @@ the model, using the method described in [Matthiä et al., (2013)](https://doi.o
 and 2021/01/31 00:00 can be used.
 
 Count rates from the OULU neutron monitor (or representative values) can be supplied directly into the model using the
-```
+```python
 CosRayModifiedISO.getSpectrumUsingOULUcountRate(OULUcountRatePerSecond, atomicNumber)
 ```
 method, where `OULUcountRatePerSecond` is a single float representing the count rate per second of the OULU neutron monitor at a given instance of time. 
 The solar modulation parameter can also be supplied directly using
-```
+```python
 CosRayModifiedISO.getSpectrumUsingSolarModulation(solarModulationWparameter, atomicNumber)
 ```
 This function can be identically supplied with the monthly averaged sunspot number instead of the solar modulation parameter, which the solar modulation parameter
 is essentially a proxy for. Alternatively the identical function 
 
-```
+```python
 CosRayModifiedISO.getSpectrumUsingSSN(sunspotNumber, atomicNumber)
 ```  
 can be used instead for code understandability.
@@ -154,7 +154,7 @@ can be used instead for code understandability.
 Each of these three methods output Pandas DataFrames in the same format as outputted by `getSpectrumUsingTimestamp`. The value of the solar modulation parameter
 as a function of OULU neutron monitor monitor count rate can also be outputted by running
 
-```
+```python
 CosRayModifiedISO.getWparameterFromOULUcountRate(OULUcountRateInSeconds)
 ```
 
@@ -163,13 +163,13 @@ CosRayModifiedISO.getWparameterFromOULUcountRate(OULUcountRateInSeconds)
 In addition to the above spectrum calculation methods, there are also several methods for performing conversion between different quantities for input and output.
 
 The methods
-```
+```python
 CosRayModifiedISO.convertParticleRigidityToEnergy(particleRigidityInGV, 
                                             particleMassAU, 
                                             particleChargeAU)
 ```
 and
-```
+```python
 CosRayModifiedISO.convertParticleRigidityToEnergy(particleRigidityInGV, 
                                             particleMassAU, 
                                             particleChargeAU)
@@ -179,14 +179,14 @@ as [Pandas Series objects](https://pandas.pydata.org/docs/reference/api/pandas.S
 and in atomic units.
 
 The methods
-```
+```python
 CosRayModifiedISO.convertParticleRigiditySpecToEnergySpec(particleRigidityInGV, 
                                                     fluxInRigidityGVform, 
                                                     particleMassAU, 
                                                     particleChargeAU)
 ```
 and
-```
+```python
 CosRayModifiedISO.convertParticleEnergySpecToRigiditySpec(particleKineticEnergyInMeV, 
                                                     fluxInEnergyMeVform, 
                                                     particleMassAU, 
@@ -196,7 +196,7 @@ can be used to convert differential rigidity flux to differential energy flux an
 respective differential flux values must be inputted as [Pandas Series objects](https://pandas.pydata.org/docs/reference/api/pandas.Series.html).
 
 The particle mass for all of these methods can be acquired directly from atomic number using
-```
+```python
 CosRayModifiedISO.getAtomicMass(atomicNumber)
 ```
 
