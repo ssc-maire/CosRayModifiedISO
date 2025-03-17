@@ -62,7 +62,9 @@ Unit description:
 to get a single differential flux value for a particle value of solar modulation, and for a particular particle with a given atomic number and kinetic energy 
 (or range of kinetic energies), the appropriate method for `CosRayModifiedISO` is
 ```python
-CosRayModifiedISO.getEnergyFluxesFromEnergies(solarModulationWparameter, atomicNumber, energyListInMeV)
+CosRayModifiedISO.getEnergyFluxesFromEnergies(solarModulationWparameter,
+                                              atomicNumber,
+                                              energyListInMeV)
 ```
 
 For example, the script
@@ -73,7 +75,9 @@ solarModulationWparameter = 19.25 # the solar modulation at a specific point in 
 atomicNumber = 1 # the atomic number of the particle in question - in this case a proton/hydrogen ion, which has an atomic number of 1
 energyListInMeV = 945.2 # kinetic energy of particle in MeV
 
-print(CosRayModifiedISO.getEnergyFluxesFromEnergies(solarModulationWparameter, atomicNumber, energyListInMeV))
+print(CosRayModifiedISO.getEnergyFluxesFromEnergies(solarModulationWparameter,
+                                                    atomicNumber,
+                                                    energyListInMeV))
 ```
 gives
 ```python
