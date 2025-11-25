@@ -81,6 +81,8 @@ class modifiedISOmodelSpectrumFromTimeSeries():
         self._atomicNumber = atomicNumber
         if energy_bin_edges is None:
             self._energy_bin_edges = np.geomspace(10, 1e6, 51)
+        else:
+            self._energy_bin_edges = energy_bin_edges
         self.energy_mid_points, self.flux_array = self.generateSpectrum()
         return
 
