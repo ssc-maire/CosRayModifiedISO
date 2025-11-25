@@ -7,7 +7,7 @@ from CosRayModifiedISO.internalFunctions.importingNMdata import getOULUcountRate
 from CosRayModifiedISO.internalFunctions.miscellaneous import convertToIterable
 from CosRayModifiedISO.internalFunctions.pythonModifiedISO import getAtomicMass, getModifiedISO_GCR_Flux_Single, getWparameterFromOULUcountRate
 from CosRayModifiedISO.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleRigiditySpecToEnergySpec, convertParticleRigidityToEnergy, convertParticleEnergyToRigidity
-from CosRayModifiedISO.internalFunctions.spectrumHandling import ISOmodelSpectrum_fromSolarModulation
+from CosRayModifiedISO.internalFunctions.spectrumHandling import ISOmodelSpectrum_fromSolarModulation, modifiedISOmodelSpectrumFromTimeSeries
 
 import logging
 
@@ -62,9 +62,12 @@ def getSpectrumUsingOULUcountRate(OULUcountRatePerSecond: float, atomicNumber: i
     return outputDF
 
 
-def getSpectrumUsingOULUcountRateTimeSeries(OULUcountRatePerSecondTimeSeries: np.ndarray, atomicNumber: int):
+def getSpectrumUsingOULUcountRateTimeSeries(OULUcountRatePerSecondTimeSeries: np.ndarray, atomicNumber: int, energy_arr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     solarModulationWparameterArr = getWparameterFromOULUcountRate(
         OULUcountRatePerSecondTimeSeries)
+    specObj = modifiedISOmodelSpectrumFromTimeSeries(
+        solarModulationWparameterArr, atomicNumber, energy_arr)
+    return specObj.energy_mid_points, specObj.flux_array
 
 
 getSpectrumUsingSSN = getSpectrumUsingSolarModulation
