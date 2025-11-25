@@ -1,2 +1,5 @@
 *.pyc
 ts_playground.py
+build/*
+CosRayModifiedISO.egg-info/*
+.eggs/*
