@@ -1,7 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below. The homepage for this software can be found at https://github.com/ssc-maire/CosRayModifiedISO"
 authors:
-- alias: "Space Environment and Protection Group, University of Surrey"
+- family-names: Davis
+  given-names: Christopher Stephen William
+  orcid: https://orcid.org/0000-0002-8096-1383
 title: "CosRayModifiedISO"
 type: software
 version: 1.2.7
