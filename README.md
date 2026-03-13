@@ -19,7 +19,7 @@ pip install CosRayModifiedISO
 Or clone CosRayModifiedISO from https://github.com/ssc-maire/CosRayModifiedISO, and then from the cloned directory, run
 
 ```shell
-sudo python setup.py install
+pip install .
 ```
 
 # Usage
