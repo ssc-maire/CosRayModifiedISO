@@ -10,25 +10,25 @@ from importlib_resources import files
 def readInOULUdata()->pd.DataFrame:
 
     inputPKLfile = files('CosRayModifiedISO.neutronMonitorData').joinpath('OULUinputData.pkl')
-    inputOULUDATfile = files('CosRayModifiedISO.neutronMonitorData').joinpath('OULU_1964_04_01 _00_00_2021_01_31 _00_00.dat')
+    #inputOULUDATfile = files('CosRayModifiedISO.neutronMonitorData').joinpath('OULU_1964_04_01 _00_00_2021_01_31 _00_00.dat')
 
-    if not os.path.isfile(inputPKLfile):
+    # if not os.path.isfile(inputPKLfile):
 
-        inputDF = pd.read_csv(inputOULUDATfile,
-                            skiprows=22, header=None, skipfooter=3, delimiter=" ")
-        inputDF.drop(6,axis=1,inplace=True)
-        inputDF.columns = ["date", "time", "fractional year", "uncorrected counts / min", "corrected counts / min", "barometric pressure (mbar)"]
-        inputDF["datetime"] = (inputDF["date"]+" " + inputDF["time"]).apply(lambda row:dt.datetime.strptime(row,"%Y.%m.%d %H:%M:%S"))
+    #     inputDF = pd.read_csv(inputOULUDATfile,
+    #                         skiprows=22, header=None, skipfooter=3, delimiter=" ")
+    #     inputDF.drop(6,axis=1,inplace=True)
+    #     inputDF.columns = ["date", "time", "fractional year", "uncorrected counts / min", "corrected counts / min", "barometric pressure (mbar)"]
+    #     inputDF["datetime"] = (inputDF["date"]+" " + inputDF["time"]).apply(lambda row:dt.datetime.strptime(row,"%Y.%m.%d %H:%M:%S"))
 
-        outputDF = inputDF[["datetime","corrected counts / min"]]
+    #     outputDF = inputDF[["datetime","corrected counts / min"]]
 
-        with open(inputPKLfile,"wb") as OULUPKLfile:
-            pkl.dump(outputDF,OULUPKLfile)
+    #     with open(inputPKLfile,"wb") as OULUPKLfile:
+    #         pkl.dump(outputDF,OULUPKLfile)
 
-    else:
+    # else:
 
-        with open(inputPKLfile,"rb") as OULUPKLfile:
-            outputDF = pkl.load(OULUPKLfile)
+    with open(inputPKLfile,"rb") as OULUPKLfile:
+        outputDF = pkl.load(OULUPKLfile)
 
     return outputDF
 
