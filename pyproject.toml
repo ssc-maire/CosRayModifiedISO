@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "CosRayModifiedISO"
-version = "1.2.11"
+version = "1.2.12"
 description = "A Python library for acquiring galactic cosmic ray spectra at Earth from the ISO model as modified by DLR. All the details and equations about this model can be found in Matthiae et al., A ready-to-use galactic cosmic ray model, Advances in Space Research 51.3 (2013): 329-338, https://doi.org/10.1016/j.asr.2012.09.022 ."
 readme = "README.md"
 license = { text = "CC BY-NC-SA 4.0" }
