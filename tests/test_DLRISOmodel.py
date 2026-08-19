@@ -24,8 +24,8 @@ from CosRayModifiedISO import CosRayModifiedISO
 SPECTRUM_COLUMNS = [
     "Energy (MeV/n)",
     "d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)",
-    "Rigidity (GV/n)",
-    "d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)",
+    "Rigidity (GV)",
+    "d_Flux / d_R (cm-2 s-1 sr-1 GV-1)",
 ]
 
 TIMESTAMP_2001 = dt.datetime(2001, 10, 27, 0, 10, 35, tzinfo=dt.timezone.utc)
@@ -102,9 +102,13 @@ class TestGetRigidityFluxesFromRigidities:
 
 
 class TestGetSpectrumUsingSolarModulation:
+    KGO_HELIUM_ROWS = {
+        0: [11.294627058970837, 5.565730138613413e-6, 0.2920440736449699, 4.279421540294369e-4],
+        4: [28.370820458389794, 1.3394663729029165e-5, 0.4649473147684023, 1.6106808615034475e-3],
+    }
     KGO_NITROGEN_ROWS = {
-        0: [11.294627058970837, 1.899594204175842e-8, 0.07783495116549362, 5.510632880080903e-6],
-        4: [28.370820458389794, 5.782005269637756e-8, 0.12340015168771055, 2.6558065814862043e-5],
+        0: [11.294627058970837, 1.899594204175842e-8, 0.2920440736449699, 1.4605746510724024e-6],
+        4: [28.370820458389794, 5.782005269637756e-8, 0.4649473147684023, 6.952742836488222e-6],
     }
 
     @pytest.mark.parametrize(
@@ -135,11 +139,20 @@ class TestGetSpectrumUsingSolarModulation:
         assert len(spectrum) == 50
         assert_spectrum_rows_match_kgo(spectrum, kgo_rows)
 
+    def test_helium_spectrum_matches_kgo(self):
+        spectrum = CosRayModifiedISO.getSpectrumUsingSolarModulation(
+            SOLAR_MODULATION_W, HELIUM_Z
+        )
+
+        assert len(spectrum) == 50
+        assert_spectrum_rows_match_kgo(spectrum, self.KGO_HELIUM_ROWS)
+
     def test_nitrogen_spectrum_matches_kgo(self):
         spectrum = CosRayModifiedISO.getSpectrumUsingSolarModulation(
             SOLAR_MODULATION_W, NITROGEN_Z
         )
 
+        assert len(spectrum) == 50
         assert_spectrum_rows_match_kgo(spectrum, self.KGO_NITROGEN_ROWS)
 
     def test_ssn_alias_matches_solar_modulation_spectrum(self):
