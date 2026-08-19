@@ -1,7 +1,10 @@
 import pandas as pd
 
 from CosRayModifiedISO.internalFunctions.pythonModifiedISO import getAtomicMass, getModifiedISO_GCR_Flux_Default_Energies, getWparameterFromOULUcountRate
-from CosRayModifiedISO.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleEnergyToRigidity
+from CosRayModifiedISO.internalFunctions.rigidityEnergyConversionFunctions import (
+    convertPerNucleonEnergySpecToTotalRigiditySpec,
+    convertPerNucleonEnergyToTotalRigidity,
+)
 
 class rigiditySpectrum():
 
@@ -42,11 +45,19 @@ class modifiedISOmodelSpectrum(rigiditySpectrum):
         generatedSpectrumDF = pd.DataFrame(energyAndfluxArray)
 
         generatedSpectrumDF.columns = ["Energy", "FluxInEnergyMeVform"]
-        generatedSpectrumDF["Rigidity"] = convertParticleEnergyToRigidity(generatedSpectrumDF["Energy"], 
-                                                                        particleMassAU = getAtomicMass(atomicNumber), particleChargeAU = atomicNumber)
-        generatedSpectrumDF["FluxInRigidityGVForm"] = convertParticleEnergySpecToRigiditySpec(generatedSpectrumDF["Energy"],
-                                                                                            generatedSpectrumDF["FluxInEnergyMeVform"], 
-                                                                                            particleMassAU = getAtomicMass(atomicNumber), particleChargeAU = atomicNumber) #cm-2 s-1 sr-1 (GV/n)-1
+        atomic_mass = getAtomicMass(atomicNumber)
+        # Matthiä energies are MeV/n; rigidity converters expect total MeV / total GV.
+        generatedSpectrumDF["Rigidity"] = convertPerNucleonEnergyToTotalRigidity(
+            generatedSpectrumDF["Energy"],
+            particleMassAU=atomic_mass,
+            particleChargeAU=atomicNumber,
+        )
+        generatedSpectrumDF["FluxInRigidityGVForm"] = convertPerNucleonEnergySpecToTotalRigiditySpec(
+            generatedSpectrumDF["Energy"],
+            generatedSpectrumDF["FluxInEnergyMeVform"],
+            particleMassAU=atomic_mass,
+            particleChargeAU=atomicNumber,
+        )
         self._generatedSpectrumDF = generatedSpectrumDF
 
         return generatedSpectrumDF

@@ -7,7 +7,14 @@ from CosRayModifiedISO.internalFunctions.importingNMdata import getOULUcountRate
 
 from CosRayModifiedISO.internalFunctions.miscellaneous import convertToIterable
 from CosRayModifiedISO.internalFunctions.pythonModifiedISO import getAtomicMass, getModifiedISO_GCR_Flux_Single, getWparameterFromOULUcountRate
-from CosRayModifiedISO.internalFunctions.rigidityEnergyConversionFunctions import convertParticleEnergySpecToRigiditySpec, convertParticleRigiditySpecToEnergySpec, convertParticleRigidityToEnergy, convertParticleEnergyToRigidity
+from CosRayModifiedISO.internalFunctions.rigidityEnergyConversionFunctions import (
+    convertParticleEnergySpecToRigiditySpec,
+    convertParticleRigiditySpecToEnergySpec,
+    convertParticleRigidityToEnergy,
+    convertParticleEnergyToRigidity,
+    convertPerNucleonEnergySpecToTotalRigiditySpec,
+    convertPerNucleonEnergyToTotalRigidity,
+)
 from CosRayModifiedISO.internalFunctions.spectrumHandling import ISOmodelSpectrum_fromSolarModulation
 
 import logging
@@ -15,35 +22,55 @@ import logging
 logging.basicConfig(level=logging.WARNING)
 
 def getEnergyFluxesFromEnergies(solarModulationWparameter:float, atomicNumber:int, energyListInMeV:list):
+    """Differential energy flux at kinetic energies per nucleon (MeV/n).
+
+    Returns values in cm-2 s-1 sr-1 (MeV/n)-1.
+    """
 
     energyListInMeV = convertToIterable(energyListInMeV)
 
     return np.array([getModifiedISO_GCR_Flux_Single(solarModulationWparameter, atomicNumber, energy) for energy in energyListInMeV])
 
 def getRigidityFluxesFromRigidities(solarModulationWparameter:float, atomicNumber:int, rigidityListInGV:list):
+    """Differential rigidity flux at total rigidities (GV).
+
+    ``rigidityListInGV`` is total rigidity pc/Ze. The Matthiä model is evaluated
+    at the corresponding kinetic energy per nucleon.
+    Returns values in cm-2 s-1 sr-1 GV-1.
+    """
 
     rigidityListInGV = convertToIterable(rigidityListInGV)
+    atomic_mass = getAtomicMass(atomicNumber)
 
-    energyListInMeV = convertParticleRigidityToEnergy(particleRigidityInGV = pd.Series(rigidityListInGV), 
-                                                      particleMassAU = getAtomicMass(atomicNumber), 
-                                                      particleChargeAU = atomicNumber)
+    energyTotalMeV = convertParticleRigidityToEnergy(
+        particleRigidityInGV=pd.Series(rigidityListInGV),
+        particleMassAU=atomic_mass,
+        particleChargeAU=atomicNumber,
+    )
+    energyPerNucleonMeV = energyTotalMeV / atomic_mass
 
-    energyFluxes = getEnergyFluxesFromEnergies(solarModulationWparameter, atomicNumber, energyListInMeV)
+    energyFluxes = getEnergyFluxesFromEnergies(
+        solarModulationWparameter, atomicNumber, energyPerNucleonMeV
+    )
 
-    rigidityFluxes = convertParticleEnergySpecToRigiditySpec(particleKineticEnergyInMeV = pd.Series(energyListInMeV), 
-                                                             fluxInEnergyMeVform = pd.Series(energyFluxes), 
-                                                             particleMassAU = getAtomicMass(atomicNumber), 
-                                                             particleChargeAU = atomicNumber)
+    rigidityFluxes = convertPerNucleonEnergySpecToTotalRigiditySpec(
+        energyPerNucleonMeV,
+        pd.Series(energyFluxes),
+        particleMassAU=atomic_mass,
+        particleChargeAU=atomicNumber,
+    )
 
     return np.array(rigidityFluxes)
 
 def getSpectrumUsingSolarModulation(solarModulationWparameter:float, atomicNumber:int):
     generalSpectrum = ISOmodelSpectrum_fromSolarModulation(solarModulationWparameter, atomicNumber)
     outputDF = generalSpectrum._generatedSpectrumDF
-    outputDF.columns = ["Energy (MeV/n)", 
-                        "d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)",
-                        "Rigidity (GV/n)",
-                        "d_Flux / d_R (cm-2 s-1 sr-1 (GV/n)-1)"]
+    outputDF.columns = [
+        "Energy (MeV/n)",
+        "d_Flux / d_E (cm-2 s-1 sr-1 (MeV/n)-1)",
+        "Rigidity (GV)",
+        "d_Flux / d_R (cm-2 s-1 sr-1 GV-1)",
+    ]
     return outputDF
 
 def getSpectrumUsingOULUcountRate(OULUcountRatePerSecond:float, atomicNumber:int):

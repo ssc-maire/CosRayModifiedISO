@@ -14,7 +14,56 @@ def determineParticleAttributes(particleMassAU, particleChargeAU):
     particleRestEnergy = m0 * (c**2)
     return particleCharge,particleRestEnergy
 
+
+def _as_energy_series(particleKineticEnergyInMeV):
+    if isinstance(particleKineticEnergyInMeV, pd.Series):
+        return particleKineticEnergyInMeV
+    return pd.Series(particleKineticEnergyInMeV)
+
+
+def convertPerNucleonEnergyToTotalRigidity(
+    energyPerNucleonMeV,
+    particleMassAU=1,
+    particleChargeAU=1,
+):
+    """Convert kinetic energy per nucleon (MeV/n) to total rigidity (GV).
+
+    ``convertParticleEnergyToRigidity`` expects total kinetic energy in MeV.
+    """
+    energy_per_nucleon = _as_energy_series(energyPerNucleonMeV)
+    energy_total_MeV = energy_per_nucleon * particleMassAU
+    return convertParticleEnergyToRigidity(
+        energy_total_MeV,
+        particleMassAU=particleMassAU,
+        particleChargeAU=particleChargeAU,
+    )
+
+
+def convertPerNucleonEnergySpecToTotalRigiditySpec(
+    energyPerNucleonMeV,
+    fluxPerMeVPerNucleon,
+    particleMassAU=1,
+    particleChargeAU=1,
+):
+    """Convert a per-nucleon energy spectrum to a total-rigidity spectrum.
+
+    If ``j_En`` is in (cm-2 s-1 sr-1 (MeV/n)-1) and ``R`` is total GV, then
+    ``j_R = j_En * d(E/n)/dR = (j_En / A) * d(E_tot)/dR``.
+    """
+    energy_per_nucleon = _as_energy_series(energyPerNucleonMeV)
+    flux_per_mev_n = _as_energy_series(fluxPerMeVPerNucleon)
+    energy_total_MeV = energy_per_nucleon * particleMassAU
+    flux_for_total_jacobian = flux_per_mev_n / particleMassAU
+    return convertParticleEnergySpecToRigiditySpec(
+        energy_total_MeV,
+        flux_for_total_jacobian,
+        particleMassAU=particleMassAU,
+        particleChargeAU=particleChargeAU,
+    )
+
+
 def convertParticleEnergyToRigidity(particleKineticEnergyInMeV:pd.Series, particleMassAU = 1, particleChargeAU = 1):
+    """Convert total kinetic energy (MeV) to total rigidity (GV)."""
 
     particleCharge, particleRestEnergy = determineParticleAttributes(particleMassAU, particleChargeAU)
 
@@ -30,6 +79,7 @@ def convertParticleEnergyToRigidity(particleKineticEnergyInMeV:pd.Series, partic
     return rigidityInGV.apply(float)
 
 def convertParticleRigidityToEnergy(particleRigidityInGV:pd.Series, particleMassAU = 1, particleChargeAU = 1):
+    """Convert total rigidity (GV) to total kinetic energy (MeV)."""
 
     particleCharge, particleRestEnergy = determineParticleAttributes(particleMassAU, particleChargeAU)
 
@@ -56,6 +106,7 @@ def calculate_dKEoverdR(particleKineticEnergyInMeV, particleCharge, particleRest
     return dKEInMeV_drigidityInGV
 
 def convertParticleEnergySpecToRigiditySpec(particleKineticEnergyInMeV:pd.Series, fluxInEnergyMeVform:pd.Series, particleMassAU = 1, particleChargeAU = 1):
+    """Convert dJ/dE (per total MeV) to dJ/dR (per total GV)."""
 
     particleCharge, particleRestEnergy = determineParticleAttributes(particleMassAU, particleChargeAU)
 
@@ -64,10 +115,15 @@ def convertParticleEnergySpecToRigiditySpec(particleKineticEnergyInMeV:pd.Series
     return (dKEInMeV_drigidityInGV * fluxInEnergyMeVform.apply(dec.Decimal)).apply(float)
 
 def convertParticleRigiditySpecToEnergySpec(particleRigidityInGV:pd.Series, fluxInRigidityGVform:pd.Series, particleMassAU = 1, particleChargeAU = 1):
+    """Convert dJ/dR (per total GV) to dJ/dE (per total MeV)."""
 
     particleCharge, particleRestEnergy = determineParticleAttributes(particleMassAU, particleChargeAU)
 
-    particleKineticEnergyInMeV = convertParticleRigidityToEnergy(particleRigidityInGV, particleMassAU = 1, particleChargeAU = 1).apply(dec.Decimal)
+    particleKineticEnergyInMeV = convertParticleRigidityToEnergy(
+        particleRigidityInGV,
+        particleMassAU=particleMassAU,
+        particleChargeAU=particleChargeAU,
+    ).apply(dec.Decimal)
 
     dKEInMeV_drigidityInGV = calculate_dKEoverdR(particleKineticEnergyInMeV, particleCharge, particleRestEnergy)
 
